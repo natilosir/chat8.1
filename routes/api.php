@@ -1,19 +1,22 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::post('login', [ AuthController::class, 'login' ]);
+Route::post('/register', [ AuthController::class, 'register' ]);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([ 'middleware' => 'auth:sanctum' ], function () {
+    Route::post('/check', [ AuthController::class, 'check' ]);
+    Route::post('logout', [ AuthController::class, 'logout' ]);
+    Route::post('refresh', [ AuthController::class, 'refresh' ]);
+    Route::post('me', [ AuthController::class, 'me' ]);
+
+    Route::post('/CreateChat', [ ChatController::class, 'Create' ]);
+    Route::post('/GetChatsData', [ ChatController::class, 'GetChats' ]);
+    Route::post('/AllChats', [ ChatController::class, 'show' ]);
+    Route::post('/send', [ ChatController::class, 'send' ]);
+    Route::post('/edit', [ ChatController::class, 'edit' ]);
+    Route::post('/load', [ ChatController::class, 'load' ]);
 });
