@@ -79,10 +79,10 @@ class ChatController extends Controller {
             return [
                 'username'     => $chat->user->username,
                 'hash'         => $receiver,
-                'last_message' => $lastMessage ? [
-                    'text'       => $lastMessage->text,
-                    'created_at' => $formattedDate,
-                ] : null,
+                'last_message' => [
+                    'text'       => $lastMessage->text ?? "",
+                    'created_at' => $formattedDate ?? "اخیرا",
+                ],
             ];
         })->sortByDesc('updated_at')->values()->all();
 
