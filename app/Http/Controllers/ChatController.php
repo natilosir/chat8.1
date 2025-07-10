@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+time::Timezone(3.5);
+
 class ChatController extends Controller {
 
     public function Create( Request $request ) {
@@ -147,7 +149,7 @@ class ChatController extends Controller {
             'receiver' => $request['receiver'],
             'text'     => $request['text'],
         ]);
-        $formattedDate = time::format(strtotime($message->created_at), 'W D M H:i:s');
+        $formattedDate = time::format(strtotime($message->created_at), 'H:i:s');
 
         return response()->json([
             'success'    => true,
